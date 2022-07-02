@@ -1,7 +1,7 @@
 package io.getarrays.UserService.service;
 
-import io.getarrays.UserService.domain.AppRole;
-import io.getarrays.UserService.domain.AppUser;
+import io.getarrays.UserService.entities.AppRole;
+import io.getarrays.UserService.entities.AppUser;
 
 import java.util.List;
 

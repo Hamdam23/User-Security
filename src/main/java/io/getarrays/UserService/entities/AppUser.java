@@ -1,4 +1,4 @@
-package io.getarrays.UserService.domain;
+package io.getarrays.UserService.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,18 +7,29 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import java.util.ArrayList;
+import java.util.Collection;
 
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppRole {
+public class AppUser {
 
     @Id
     @GeneratedValue(strategy = AUTO)
     private Long id;
 
     private String name;
+
+    private String username;
+
+    private String password;
+
+    @ManyToMany(fetch = EAGER)
+    private Collection<AppRole> roles = new ArrayList<>();
 }

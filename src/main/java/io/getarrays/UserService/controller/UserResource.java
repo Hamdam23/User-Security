@@ -1,12 +1,12 @@
-package io.getarrays.UserService.api;
+package io.getarrays.UserService.controller;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.getarrays.UserService.domain.AppRole;
-import io.getarrays.UserService.domain.AppUser;
+import io.getarrays.UserService.entities.AppRole;
+import io.getarrays.UserService.entities.AppUser;
 import io.getarrays.UserService.service.UserService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +34,26 @@ public class UserResource {
 
     @GetMapping("/users")
     public ResponseEntity<List<AppUser>> getUsers(){
+        return ResponseEntity.ok().body(userService.getUsers());
+    }
+
+    @GetMapping("/users/aaa/1")
+    public ResponseEntity<List<AppUser>> getUsersA(){
+        return ResponseEntity.ok().body(userService.getUsers());
+    }
+
+    @GetMapping("/users/bbb/2/hello/users")
+    public ResponseEntity<List<AppUser>> getUsersB(){
+        return ResponseEntity.ok().body(userService.getUsers());
+    }
+
+    @GetMapping("/users/ccc/3")
+    public ResponseEntity<List<AppUser>> getUsersC(){
+        return ResponseEntity.ok().body(userService.getUsers());
+    }
+
+    @GetMapping("/users/ddd/4")
+    public ResponseEntity<List<AppUser>> getUsersD(){
         return ResponseEntity.ok().body(userService.getUsers());
     }
 

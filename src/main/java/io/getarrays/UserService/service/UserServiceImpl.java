@@ -1,7 +1,7 @@
 package io.getarrays.UserService.service;
 
-import io.getarrays.UserService.domain.AppRole;
-import io.getarrays.UserService.domain.AppUser;
+import io.getarrays.UserService.entities.AppRole;
+import io.getarrays.UserService.entities.AppUser;
 import io.getarrays.UserService.repo.RoleRepo;
 import io.getarrays.UserService.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
