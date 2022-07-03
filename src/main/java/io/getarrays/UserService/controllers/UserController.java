@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.getarrays.UserService.dto.UserImageDTO;
 import io.getarrays.UserService.entities.AppRole;
 import io.getarrays.UserService.entities.AppUser;
 import io.getarrays.UserService.service.UserService;
@@ -34,27 +35,27 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/users")
-    public ResponseEntity<List<AppUser>> getUsers(){
+    public ResponseEntity<List<AppUser>> getUsers() {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
     @GetMapping("/users/aaa/1")
-    public ResponseEntity<List<AppUser>> getUsersA(){
+    public ResponseEntity<List<AppUser>> getUsersA() {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
     @GetMapping("/users/bbb/2/hello/users")
-    public ResponseEntity<List<AppUser>> getUsersB(){
+    public ResponseEntity<List<AppUser>> getUsersB() {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
     @GetMapping("/users/ccc/3")
-    public ResponseEntity<List<AppUser>> getUsersC(){
+    public ResponseEntity<List<AppUser>> getUsersC() {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
     @GetMapping("/users/ddd/4")
-    public ResponseEntity<List<AppUser>> getUsersD(){
+    public ResponseEntity<List<AppUser>> getUsersD() {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
@@ -88,7 +89,7 @@ public class UserController {
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
 
-        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
                 String refresh_token = authorizationHeader.substring("Bearer ".length());
                 Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
@@ -98,7 +99,7 @@ public class UserController {
                 AppUser user = userService.getUser(username);
                 String access_token = JWT.create()
                         .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis() +  10 * 60 * 1000))
+                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim("role", user.getRole().getName())
                         .sign(algorithm);
@@ -109,7 +110,7 @@ public class UserController {
                 response.setContentType(APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 
-            } catch (Exception exception){
+            } catch (Exception exception) {
                 response.setHeader("error", exception.getMessage());
                 response.setStatus(FORBIDDEN.value());
                 //response.sendError(FORBIDDEN.value());

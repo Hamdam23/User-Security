@@ -1,5 +1,6 @@
 package io.getarrays.UserService.service;
 
+import io.getarrays.UserService.dto.UserImageDTO;
 import io.getarrays.UserService.entities.AppRole;
 import io.getarrays.UserService.entities.AppUser;
 import io.getarrays.UserService.entities.Image;
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AppUser user = userRepo.findByUsername(username);
-        if (user == null){
+        if (user == null) {
             log.error("User not found in the database");
             throw new UsernameNotFoundException("User  not found in the database");
         } else {
