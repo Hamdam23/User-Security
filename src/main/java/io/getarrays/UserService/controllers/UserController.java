@@ -1,4 +1,4 @@
-package io.getarrays.UserService.controller;
+package io.getarrays.UserService.controllers;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.getarrays.UserService.entities.AppRole;
 import io.getarrays.UserService.entities.AppUser;
 import io.getarrays.UserService.service.UserService;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MimeTypeUtils;
@@ -19,8 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
@@ -29,7 +30,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-public class UserResource {
+public class UserController {
     private final UserService userService;
 
     @GetMapping("/users")
@@ -70,9 +71,17 @@ public class UserResource {
     }
 
     @PostMapping("/role/addtouser")
-    public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUSerForm form) {
+    public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form) {
         userService.addRoleToUser(form.getUsername(), form.getRoleName());
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/users/{id}/set-image")
+    public ResponseEntity<AppUser> setUserImage(
+            @PathVariable long id,
+            @RequestBody UserImageDTO imageDTO
+    ) {
+        return ResponseEntity.ok(userService.setUserImage(id, imageDTO));
     }
 
     @GetMapping("/token/refresh")
@@ -91,7 +100,7 @@ public class UserResource {
                         .withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() +  10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles", user.getRoles().stream().map(AppRole::getName).collect(Collectors.toList()))
+                        .withClaim("role", user.getRole().getName())
                         .sign(algorithm);
 
                 Map<String, String> tokens = new HashMap<>();
@@ -114,10 +123,4 @@ public class UserResource {
             throw new RuntimeException("Refresh token is missing!");
         }
     }
-}
-
-@Data
-class RoleToUSerForm {
-    private String username;
-    private String roleName;
 }

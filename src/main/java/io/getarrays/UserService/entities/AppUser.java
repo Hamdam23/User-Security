@@ -1,15 +1,11 @@
 package io.getarrays.UserService.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import java.util.ArrayList;
-import java.util.Collection;
+import javax.persistence.*;
 
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.AUTO;
@@ -28,8 +24,13 @@ public class AppUser {
 
     private String username;
 
+    @JsonIgnore
     private String password;
 
-    @ManyToMany(fetch = EAGER)
-    private Collection<AppRole> roles = new ArrayList<>();
+    @ManyToOne(fetch = EAGER)
+    private AppRole role;
+
+    @ManyToOne(fetch = EAGER)
+    @JoinColumn(name = "image_id")
+    private Image image;
 }

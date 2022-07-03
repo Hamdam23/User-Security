@@ -9,6 +9,9 @@ public interface UserService {
     AppUser saveUser(AppUser user);
     AppRole saveRole(AppRole role);
     void addRoleToUser(String username, String roleName);
+
+    AppUser setUserImage(long userId, UserImageDTO imageDTO);
+
     AppUser getUser(String username);
     List<AppUser> getUsers();
 }
