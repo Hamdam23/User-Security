@@ -15,17 +15,17 @@ public class ImageController {
 
     private final ImageService imageService;
 
-    @PostMapping
+    @PostMapping("/upload")
     public Image uploadImage(@RequestParam MultipartFile multipartImage) {
         return imageService.uploadImage(multipartImage);
     }
 
-    @GetMapping(value = "{id}")
+    @GetMapping(value = "/{id}")
     public Image getImageById(@PathVariable long id) {
         return imageService.getImageById(id);
     }
 
-    @GetMapping(value = "download/{name}", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "/download/{name}", produces = MediaType.IMAGE_JPEG_VALUE)
     public Resource downloadImageByName(@PathVariable String name) throws Exception {
         return imageService.downloadImageByName(name);
     }

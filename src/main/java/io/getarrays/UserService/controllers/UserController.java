@@ -39,26 +39,6 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUsers());
     }
 
-    @GetMapping("/users/aaa/1")
-    public ResponseEntity<List<AppUser>> getUsersA() {
-        return ResponseEntity.ok().body(userService.getUsers());
-    }
-
-    @GetMapping("/users/bbb/2/hello/users")
-    public ResponseEntity<List<AppUser>> getUsersB() {
-        return ResponseEntity.ok().body(userService.getUsers());
-    }
-
-    @GetMapping("/users/ccc/3")
-    public ResponseEntity<List<AppUser>> getUsersC() {
-        return ResponseEntity.ok().body(userService.getUsers());
-    }
-
-    @GetMapping("/users/ddd/4")
-    public ResponseEntity<List<AppUser>> getUsersD() {
-        return ResponseEntity.ok().body(userService.getUsers());
-    }
-
     @PostMapping("/user/save")
     public ResponseEntity<AppUser> saveUser(@RequestBody AppUser user) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
@@ -71,7 +51,7 @@ public class UserController {
         return ResponseEntity.created(uri).body(userService.saveRole(role));
     }
 
-    @PostMapping("/role/addtouser")
+    @PostMapping("/role/add-to-user")
     public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form) {
         userService.addRoleToUser(form.getUsername(), form.getRoleName());
         return ResponseEntity.ok().build();
